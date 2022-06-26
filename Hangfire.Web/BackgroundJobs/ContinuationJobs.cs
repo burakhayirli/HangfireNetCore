@@ -8,6 +8,5 @@ namespace Hangfire.Web.BackgroundJobs
         {
             Hangfire.BackgroundJob.ContinueJobWith(id, () => Debug.WriteLine($"{filename} : Watermark has been added to picture"));
         }
-
     }
 }
