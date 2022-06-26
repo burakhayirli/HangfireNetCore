@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hangfire.Web.Controllers
@@ -49,6 +47,7 @@ namespace Hangfire.Web.Controllers
         {
             return View();
         }
+
         //DelayedJob
         [HttpPost]
         public async Task<IActionResult> PictureSave(IFormFile picture)
@@ -67,11 +66,13 @@ namespace Hangfire.Web.Controllers
                 }
 
                 string jobId = BackgroundJobs.DelayedJobs.AddWatermarkJob(newFilename,"www.burakhayirli.com");
+
+                //ContinuationJob
+                BackgroundJobs.ContinuationJobs.WriteWatermarkStatusJob(jobId, newFilename);
             }
 
             return View();
         }
-
 
         //RecurringJob
         public IActionResult Login()
