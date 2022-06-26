@@ -37,6 +37,7 @@ namespace Hangfire.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        //FireAndForgetJobs
         public IActionResult SignUp()
         {
             FireAndForgetJobs.EmailSendToUserJob("1", "Sitemize hoş geldiniz.");
@@ -48,7 +49,7 @@ namespace Hangfire.Web.Controllers
         {
             return View();
         }
-
+        //DelayedJob
         [HttpPost]
         public async Task<IActionResult> PictureSave(IFormFile picture)
         {
@@ -68,6 +69,14 @@ namespace Hangfire.Web.Controllers
                 string jobId = BackgroundJobs.DelayedJobs.AddWatermarkJob(newFilename,"www.burakhayirli.com");
             }
 
+            return View();
+        }
+
+
+        //RecurringJob
+        public IActionResult Login()
+        {
+            BackgroundJobs.RecurringJobs.ReportingJob();
             return View();
         }
 
